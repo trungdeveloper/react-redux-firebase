@@ -1,6 +1,8 @@
 import React, { Component } from 'react'
 import { createProject } from '../../store/actions/projectActions'
 import { connect } from 'react-redux'
+import { compose } from 'redux'
+import { withFirestore } from 'react-redux-firebase'
 
 class CreateProject extends Component {
   state = {
@@ -38,10 +40,10 @@ class CreateProject extends Component {
   }
 }
 
-const mapDispatchToProps = dispatch => {
+const mapDispatchToProps = (dispatch, ownProps) => {
   return {
-    createProject : project => dispatch(createProject(project))
+    createProject : project => dispatch(createProject(project, ownProps))
   }
 }
 
-export default connect(null, mapDispatchToProps )(CreateProject)
+export default compose(withFirestore, connect(null, mapDispatchToProps))(CreateProject)

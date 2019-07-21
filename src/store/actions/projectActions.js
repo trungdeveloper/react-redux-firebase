@@ -1,8 +1,7 @@
-export const createProject = project => {
-  return (dispatch, getState, { getFirebase, getFirestore }) => {
+export const createProject = (project, ownProps) => {
+  return (dispatch, getState) => {
     // asyn code to call to database
-    const db = getFirestore();
-    db.collection("projects")
+    ownProps.firestore.collection("projects")
       .add({
         ...project,
         authFirstName: "Trung",
