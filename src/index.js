@@ -4,14 +4,15 @@ import "./index.css";
 import App from "./App";
 import firebase from "firebase/app";
 import "firebase/auth";
+import "firebase/database";
 import "firebase/firestore";
-import { applyMiddleware, compose, createStore } from 'redux';
+import { applyMiddleware, createStore } from "redux";
 import { Provider } from "react-redux";
 import rootReducer from "./store/reducers/rootReducer";
-import thunk from 'redux-thunk';
-import { createFirestoreInstance, getFirestore } from "redux-firestore";
-import { getFirebase, ReactReduxFirebaseProvider } from 'react-redux-firebase';
-// import fbConfig from './config/firebaseConfig'
+import thunk from "redux-thunk";
+import { createFirestoreInstance } from "redux-firestore";
+import { ReactReduxFirebaseProvider } from "react-redux-firebase";
+import * as serviceWorker from './serviceWorker'
 
 const firebaseConfig = {
   apiKey: "AIzaSyDmyBJRsB8Dz0bAD5_LdqkSZQWEaAmI4qo",
@@ -24,15 +25,16 @@ const firebaseConfig = {
 };
 
 const rrfConfig = {
-  userProfile: "users"
+  userProfile: "users",
+  attachAuthIsReady: true,
+  firebaseStateName: "firebase",
+  useFirestoreForProfile: true
 };
 
 firebase.initializeApp(firebaseConfig);
 firebase.firestore();
-const store = createStore(rootReducer,
-  compose(
-    applyMiddleware(thunk.withExtraArgument({getFirebase, getFirestore})),
-  )
+const store = createStore(
+  rootReducer, applyMiddleware(thunk)
 );
 
 const rrfProps = {
@@ -50,3 +52,4 @@ ReactDOM.render(
   </Provider>,
   document.getElementById("root")
 );
+serviceWorker.register();
