@@ -18,6 +18,7 @@ export const signOut = props => {
       .auth()
       .signOut()
       .then(() => {
+        props.firebase.logout();
         dispatch({ type: "SIGNOUT_SUCCESS" });
       });
   };
