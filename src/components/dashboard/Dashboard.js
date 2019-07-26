@@ -7,6 +7,7 @@ import { compose } from "redux";
 import { Redirect } from "react-router-dom";
 
 class Dashboard extends Component {
+  
   render() {
     const { auth, notifications, projects } = this.props;
     if(!auth.isLoaded){

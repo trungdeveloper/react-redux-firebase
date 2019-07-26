@@ -17,3 +17,15 @@ export const createProject = (project, ownProps) => {
       });
   };
 };
+
+export const deleteProject = (id, ownProps) => {
+  return (dispatch, getState) => {
+    // asyn code to call to database
+    // const authId = getState().firebase.auth.uid;
+    ownProps.firestore.collection("projects").doc(id).delete()
+      .then(() => dispatch({ type: "DELETE_PROJECT" }))
+      .catch(err => {
+        dispatch({ type: "DELETE_PROJECT_FAILED", err });
+      });
+  };
+};
