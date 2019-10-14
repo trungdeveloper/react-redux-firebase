@@ -24,11 +24,9 @@ exports.projectCreated = functions.firestore
 
 });
 
-exports.userJoined = functions.auth.user()
-  .onCreate(user => {
-    
-    return admin.firestore().collection('users')
-      .doc(user.uid).get().then(doc => {
+exports.userJoined = functions.firestore
+  .document('users/{userId}')
+  .onCreate(doc => {
 
         const newUser = doc.data();
         const notification = {
@@ -38,6 +36,4 @@ exports.userJoined = functions.auth.user()
         };
 
         return createNotification(notification);
-
-      });
 });
